@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -22,7 +22,6 @@ interface Props {
   initialEvents: TimeEvent[];
   initialState: ClockState;
   ip: string | null;
-  isAdmin: boolean;
 }
 
 const STATE_BADGE_CLASSES: Record<ClockState, string> = {
@@ -38,7 +37,6 @@ export default function Dashboard({
   initialEvents,
   initialState,
   ip,
-  isAdmin,
 }: Props) {
   const [events, setEvents] = useState<TimeEvent[]>(initialEvents);
   const [state, setState] = useState<ClockState>(initialState);
@@ -79,20 +77,10 @@ export default function Dashboard({
 
   return (
     <div className="min-h-screen">
-      {/* Header con logo corporativo */}
       <header className="border-b border-slate-200 bg-white">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Logo height={32} />
-            {isAdmin && (
-              <a
-                href="/admin"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-orange-50 text-orange-700 border border-orange-200 hover:bg-orange-100 transition"
-              >
-                <span aria-hidden="true">⚙</span>
-                Panel admin
-              </a>
-            )}
             <div className="hidden sm:block h-8 w-px bg-slate-200" />
             <div>
               <p className="text-sm font-semibold text-navy-500">{appName}</p>
@@ -106,7 +94,6 @@ export default function Dashboard({
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-8 space-y-8">
-        {/* Bloque fecha + hora + estado */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 rounded-2xl bg-white border border-slate-200 p-6">
             <p className="text-sm text-slate-500 capitalize">{today}</p>
@@ -130,19 +117,16 @@ export default function Dashboard({
             >
               {STATE_LABELS_ES[state]}
             </span>
-            {/* Cronómetro vivo del tiempo en estado actual */}
             <StateTimer state={state} events={events} />
           </div>
         </section>
 
-        {/* Errores */}
         {error && (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {error}
           </div>
         )}
 
-        {/* Botones */}
         {state !== "FINISHED" && (
           <section className="rounded-2xl bg-white border border-slate-200 p-6">
             <h2 className="text-base font-semibold text-navy-500 mb-4">
@@ -152,10 +136,8 @@ export default function Dashboard({
           </section>
         )}
 
-        {/* Resumen si jornada finalizada */}
         {state === "FINISHED" && <DaySummary events={events} />}
 
-        {/* Histórico del día */}
         <section>
           <h2 className="text-base font-semibold text-navy-500 mb-3">
             Histórico de hoy
@@ -163,7 +145,6 @@ export default function Dashboard({
           <TodayEvents events={events} />
         </section>
 
-        {/* Footer info */}
         <footer className="pt-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
           <span>IP de oficina: {ip ?? "—"}</span>
           <span>Los registros son inmutables.</span>
