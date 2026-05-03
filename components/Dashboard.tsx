@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import {
@@ -22,6 +22,7 @@ interface Props {
   initialEvents: TimeEvent[];
   initialState: ClockState;
   ip: string | null;
+  isAdmin?: boolean;
 }
 
 const STATE_BADGE_CLASSES: Record<ClockState, string> = {
@@ -37,6 +38,7 @@ export default function Dashboard({
   initialEvents,
   initialState,
   ip,
+  isAdmin = false,
 }: Props) {
   const [events, setEvents] = useState<TimeEvent[]>(initialEvents);
   const [state, setState] = useState<ClockState>(initialState);
@@ -89,7 +91,17 @@ export default function Dashboard({
               </p>
             </div>
           </div>
-          <LogoutLink />
+          <div className="flex items-center gap-4">
+            {isAdmin && (
+              <a
+                href="/admin"
+                className="text-sm font-medium text-navy-500 hover:text-navy-600 hover:underline"
+              >
+                Panel admin
+              </a>
+            )}
+            <LogoutLink />
+          </div>
         </div>
       </header>
 
